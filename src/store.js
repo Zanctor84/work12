@@ -1,19 +1,22 @@
-import ( createStore, applyMiddleware, compose ) from 'redux';
-import rootReucer from './reducers';
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from './reducers';
+import { DevTools } from './utils/index';
 
-function _applyMiddleware () {
+
+function _applyMiddleware() {
     const middleware = [
-
+        
     ];
-    return applyMiddleware(...middleware)
+    
+    return applyMiddleware(...middleware);
 }
 
-export default function configureStore (initialState) {
 
+export default function configureStore(initialState) {
     const store = compose(
-        _applyMiddleware()
-    )(createStore) (rootReucer, initialState);
-
-    return store;
+        _applyMiddleware(),
+        DevTools.instrument()  
+    )(createStore)(rootReducer, initialState);
     
+    return store;
 }
